@@ -9,6 +9,22 @@ export class HomePage {
 
   constructor() {}
 
+  buttonStatus = "start";
+
+  mainButton() {
+    const startButton = document.getElementById("start_button");
+    if (this.buttonStatus == "start") {
+      this.startTimer(0, 5);
+      this.buttonStatus = "counting";
+    } else if (this.buttonStatus == "done") {
+      this.raiseBar();
+      this.buttonStatus = "start";
+      startButton.innerHTML = "Start";
+      startButton.style.color = "var(--ion-color-light)"
+    }
+    console.log(this.buttonStatus)
+  }
+
   raiseBar() {
     const waves:any = document.getElementsByClassName("waveWrapperInner");
 
@@ -17,19 +33,25 @@ export class HomePage {
       console.log(currentBottom)
       waves[i].style.bottom = (parseInt(currentBottom[0]) + 100) + "px";
     }
+    console.log("bar raised")
   }
 
   startTimer(minute, sec) {
-    setInterval(function() {
-      document.getElementById("timer").innerHTML = minute + " : " + sec;
-      sec--;
+    const startButton = document.getElementById("start_button")
+    let timer = setInterval(() => {
+      startButton.innerHTML = minute + ":" + sec;
       if (sec == 0) {
+        if (minute == 0) {
+          this.buttonStatus = "done";
+          startButton.innerHTML = "Claim";
+          startButton.style.color = "var(--ion-color-warning-tint)";
+          clearInterval(timer);
+          console.log(this.buttonStatus)
+        }
         minute --;
         sec = 60;
-        if (minute == 0) {
-          minute = 5;
-        }
       }
+      sec--;
     }, 1000);
   }
 
