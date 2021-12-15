@@ -85,3 +85,11 @@ ion-icon {
 #create {
   left: 20px;
 }
+
+#scale {
+  position: absolute;
+  bottom: 0px;
+  overflow: hidden;
+  left: -8px;
+  z-index: 16;
+}
